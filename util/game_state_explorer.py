@@ -1,13 +1,34 @@
+from abc import ABC, abstractmethod
+from typing import Iterable
+
 import networkx as nx
 
 from games.game import GameState, Game
 
 
-class DAGExplorer:
+class GameStateExplorer(ABC):
 
     def __init__(self, game: Game):
-        self.graph = nx.DiGraph()
         self.game = game
+
+    @abstractmethod
+    def get_successor_game_states(self, game_state: GameState) -> Iterable[GameState]:
+        pass
+
+class LazyExplorer(GameStateExplorer):
+
+    def __init__(self, game: Game):
+        super().__init__(game)
+
+    def get_successor_game_states(self, game_state: GameState) -> Iterable[GameState]:
+        return [self.game.apply_action(game_state, i) for i in range(game_state.num_actions)]
+
+
+class DAGExplorer(GameStateExplorer):
+
+    def __init__(self, game: Game):
+        super().__init__(game)
+        self.graph = nx.DiGraph()
         self.build_graph()
 
     def build_graph(self):
@@ -26,7 +47,7 @@ class DAGExplorer:
     def add_game_state_edge(self, parent_game_state: GameState, child_game_state: GameState):
         self.graph.add_edge(parent_game_state, child_game_state)
 
-    def get_successor_game_states(self, game_state: GameState):
+    def get_successor_game_states(self, game_state: GameState) -> Iterable[GameState]:
         return self.graph.successors(game_state)
 
 

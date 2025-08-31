@@ -1,13 +1,13 @@
 import numpy as np
 
 from games.game import GameState
-from util.game_state_explorer import DAGExplorer
+from util.game_state_explorer import GameStateExplorer
 from util.information_set import InformationSet
 
 
 class CFRSolver:
 
-    def __init__(self, game_state_explorer: DAGExplorer):
+    def __init__(self, game_state_explorer: GameStateExplorer):
         self.info_sets = {}
         self.game_state_explorer = game_state_explorer
 
