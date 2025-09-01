@@ -1,9 +1,8 @@
-import time
 import unittest
 
-from games.game import KuhnPoker
+from games.kuhn_poker.game import KuhnPoker
 from learners.cfr_chance_sampling import CFRSolver
-from util.game_state_explorer import DAGExplorer, LazyExplorer
+from util.game_state_explorer import DAGExplorer
 
 
 class TestCFRChanceSampling(unittest.TestCase):
@@ -15,7 +14,7 @@ class TestCFRChanceSampling(unittest.TestCase):
         n_iterations = 100000
         util = 0
         game = KuhnPoker()
-        game_state_explorer = LazyExplorer(game)
+        game_state_explorer = DAGExplorer(game)
         cfr = CFRSolver(game_state_explorer)
         for i in range(n_iterations):
             util += cfr.run(game.sample_start_state(), 1.0, 1.0)

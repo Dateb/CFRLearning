@@ -1,6 +1,6 @@
 import unittest
 
-from games.game import GameState, KuhnPoker
+from games.base.game import KuhnPoker
 from util.game_state_explorer import DAGExplorer
 
 

@@ -1,6 +1,6 @@
 import unittest
 
-from games.game import GameState, KuhnPoker
+from games.base.game import GameState, KuhnPoker
 
 
 class TestKuhnPoker(unittest.TestCase):
@@ -18,9 +18,9 @@ class TestKuhnPoker(unittest.TestCase):
             private_state="2",
             active_player=0
         )
-        self.assertFalse(kuhn_poker.is_terminal_public_state(start_state))
-        self.assertFalse(kuhn_poker.is_terminal_public_state(single_pass_state))
-        self.assertTrue(kuhn_poker.is_terminal_public_state(double_pass_state))
+        self.assertFalse(kuhn_poker.is_terminal_state(start_state))
+        self.assertFalse(kuhn_poker.is_terminal_state(single_pass_state))
+        self.assertTrue(kuhn_poker.is_terminal_state(double_pass_state))
 
     def test_get_utility(self):
         kuhn_poker = KuhnPoker()

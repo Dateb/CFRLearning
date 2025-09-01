@@ -3,7 +3,7 @@ from typing import Iterable
 
 import networkx as nx
 
-from games.game import GameState, Game
+from games.base.game import GameState, Game
 
 
 class GameStateExplorer(ABC):

@@ -1,6 +1,6 @@
 import numpy as np
 
-from games.game import GameState
+from games.base.game import GameState
 from util.game_state_explorer import GameStateExplorer
 from util.information_set import InformationSet
 
@@ -45,9 +45,9 @@ class CFRSolver:
 
     def get_info_set(self, game_state: GameState) -> InformationSet:
         if game_state.is_terminal:
-            game_state_key = f"{game_state.public_state}{game_state.private_state}"
+            game_state_key = f"{game_state.get_public_info()}{game_state.get_private_info()}"
         else:
-            game_state_key = game_state.public_state
+            game_state_key = game_state.get_public_info()
 
         if game_state_key not in self.info_sets:
             self.info_sets[game_state_key] = InformationSet(game_state.num_actions)
