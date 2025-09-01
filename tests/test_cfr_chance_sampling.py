@@ -11,13 +11,10 @@ class TestCFRChanceSampling(unittest.TestCase):
         # Nash value in poker for the starting player is -1/18: https://en.wikipedia.org/wiki/Kuhn_poker
         KUHN_POKER_FIRST_PLAYER_NASH_VALUE = -1/18
 
-        n_iterations = 100000
-        util = 0
+        n_iterations = 420000
         game = KuhnPoker()
         game_state_explorer = DAGExplorer(game)
-        cfr = CFRSolver(game_state_explorer)
-        for i in range(n_iterations):
-            util += cfr.run(game.sample_start_state(), 1.0, 1.0)
+        cfr = CFRSolver(game_state_explorer, n_iterations, 0.5)
+        nash_value_estimate = cfr.run()
 
-        cfr_nash_value_estimate = util / n_iterations
-        self.assertAlmostEqual(cfr_nash_value_estimate, KUHN_POKER_FIRST_PLAYER_NASH_VALUE, places=3)
+        self.assertAlmostEqual(nash_value_estimate, KUHN_POKER_FIRST_PLAYER_NASH_VALUE, places=5)

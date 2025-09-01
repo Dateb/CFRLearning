@@ -7,7 +7,7 @@ class InformationSet:
         self.strategy = np.zeros(num_actions)
         self.strategy_sum = np.zeros(num_actions)
 
-    def get_strategy(self, realization_weight: float) -> np.ndarray:
+    def get_strategy(self) -> np.ndarray:
         self.strategy = self.regret_sum.clip(min=0)
         normalizing_sum = sum(self.strategy)
 
@@ -16,9 +16,10 @@ class InformationSet:
         else:
             self.strategy[:] = 1.0 / self.num_actions
 
-        self.strategy_sum += realization_weight * self.strategy
-
         return self.strategy
+
+    def update_total_strategy(self, realization_weight: float):
+        self.strategy_sum += realization_weight * self.strategy
 
     def get_average_strategy(self) -> np.ndarray:
         average_strategy = np.zeros(self.num_actions)
