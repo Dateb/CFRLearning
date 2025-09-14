@@ -1,3 +1,5 @@
+import random
+
 import numpy as np
 
 from games.base.game import GameState
@@ -16,15 +18,21 @@ class CFRSolver:
 
     def run(self):
         util = 0
+        start_state = self.game_state_explorer.game.get_start_state()
         for i in range(self.n_iterations):
             self.current_game_idx = i + 1
-            util += self.get_util_of_state(self.game_state_explorer.game.sample_start_state(), 1.0, 1.0)
+            util += self.get_util_of_state(start_state, 1.0, 1.0)
 
         return util / self.n_iterations
 
     def get_util_of_state(self, game_state: GameState, p0: float, p1: float) -> float:
         if game_state.is_terminal:
             return game_state.utility
+
+        if game_state.is_stochastic:
+            random_outcome = random.choice(range(game_state.num_actions))
+            successor_game_state = self.game_state_explorer.game.apply_action(game_state, random_outcome)
+            return self.get_util_of_state(successor_game_state, p0, p1)
 
         info_set = self.get_info_set(game_state)
 

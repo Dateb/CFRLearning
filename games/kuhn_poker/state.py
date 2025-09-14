@@ -18,6 +18,8 @@ class KuhnPokerState(GameState):
         super().__init__(active_player, num_actions)
 
     def get_num_actions(self) -> int:
+        if self._is_stochastic():
+            return 6
         return 0 if self.is_terminal_pass or self.is_double_bet else 2
 
     def get_public_info(self) -> str:
@@ -26,3 +28,9 @@ class KuhnPokerState(GameState):
 
     def get_private_info(self) -> str:
         return str(self.c1) if self.active_player == 0 else str(self.c0)
+
+    def _is_terminal(self) -> bool:
+        return self.num_actions == 0
+
+    def _is_stochastic(self) -> bool:
+        return self.c0 == -1

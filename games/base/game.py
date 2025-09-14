@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import List
 
 from games.base.state import GameState
 
@@ -7,11 +6,7 @@ from games.base.state import GameState
 class Game(ABC):
 
     @abstractmethod
-    def sample_start_state(self) -> GameState:
-        pass
-
-    @abstractmethod
-    def get_start_states(self) -> List[GameState]:
+    def get_start_state(self) -> GameState:
         pass
 
     @abstractmethod

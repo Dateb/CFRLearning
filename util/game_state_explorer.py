@@ -29,11 +29,8 @@ class DAGExplorer(GameStateExplorer):
     def __init__(self, game: Game):
         super().__init__(game)
         self.graph = nx.DiGraph()
-        self.build_graph()
 
-    def build_graph(self):
-        for start_state in self.game.get_start_states():
-            self.add_children_to_game_state(start_state)
+        self.add_children_to_game_state(game.get_start_state())
 
     def add_children_to_game_state(self, game_state: GameState):
         if game_state.is_terminal:

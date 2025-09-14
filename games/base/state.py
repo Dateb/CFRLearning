@@ -6,9 +6,10 @@ class GameState(ABC):
     def __init__(self, active_player: int, num_actions: int):
         self.active_player = active_player
         self.num_actions = num_actions
-        self.is_terminal = True if num_actions == 0 else False
         self.utility = 0
         self.id = f"{self.get_public_info()}/{self.get_private_info()}"
+        self.is_terminal = self._is_terminal()
+        self.is_stochastic = self._is_stochastic()
 
     def __eq__(self, other):
         return isinstance(other, GameState) and self.id == other.id
@@ -29,4 +30,12 @@ class GameState(ABC):
 
     @abstractmethod
     def get_private_info(self) -> str:
+        pass
+
+    @abstractmethod
+    def _is_terminal(self) -> bool:
+        pass
+
+    @abstractmethod
+    def _is_stochastic(self) -> bool:
         pass

@@ -13,7 +13,7 @@ class OneDieDudo(Game):
     def sample_start_state(self) -> GameState:
         return self.create_start_state(random.randint(1, 6), random.randint(1, 6))
 
-    def get_start_states(self) -> List[GameState]:
+    def get_start_state(self) -> List[GameState]:
         return [self.create_start_state(roll[0], roll[1]) for roll in self.possible_rolls]
 
     def create_start_state(self, roll0: int, roll1: int) -> GameState:
@@ -34,4 +34,4 @@ class OneDieDudo(Game):
         return (2 - n) * 6 + (6 - r) * n
 
 game = OneDieDudo()
-print(game.get_start_states())
+print(game.get_start_state())
