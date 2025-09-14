@@ -34,3 +34,19 @@ class KuhnPokerState(GameState):
 
     def _is_stochastic(self) -> bool:
         return self.c0 == -1
+    
+    def _get_terminal_utility(self) -> float:
+        utility = 0
+        player_card = self.c0 if self.active_player == 0 else self.c1
+        opponent_card = self.c1 if self.active_player == 0 else self.c0
+        is_player_card_higher = player_card > opponent_card
+
+        if self.is_terminal_pass:
+            if self.is_double_pass:
+                utility = 1 if is_player_card_higher else -1
+            else:
+                utility = 1
+        if self.is_double_bet:
+            utility = 2 if is_player_card_higher else -2
+
+        return utility

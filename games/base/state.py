@@ -11,6 +11,9 @@ class GameState(ABC):
         self.is_terminal = self._is_terminal()
         self.is_stochastic = self._is_stochastic()
 
+        self.utility = self._get_terminal_utility() if self.is_terminal else 0
+
+
     def __eq__(self, other):
         return isinstance(other, GameState) and self.id == other.id
 
@@ -38,4 +41,8 @@ class GameState(ABC):
 
     @abstractmethod
     def _is_stochastic(self) -> bool:
+        pass
+
+    @abstractmethod
+    def _get_terminal_utility(self) -> float:
         pass

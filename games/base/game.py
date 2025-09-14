@@ -10,9 +10,5 @@ class Game(ABC):
         pass
 
     @abstractmethod
-    def set_utility(self, game_state: GameState):
-        pass
-
-    @abstractmethod
     def apply_action(self, game_state: GameState, action: int) -> GameState:
         pass
